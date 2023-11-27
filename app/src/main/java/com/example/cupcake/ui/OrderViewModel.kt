@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.cupcake.ui
 
 import androidx.lifecycle.ViewModel
@@ -26,27 +11,20 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-/** Price for a single cupcake */
+//Harga untuk per 1 kue
 private const val PRICE_PER_CUPCAKE = 2.00
-
-/** Additional cost for same day pickup of an order */
+//Tambahan biaya untuk pick up hari yang sama
 private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
 
-/**
- * [OrderViewModel] holds information about a cupcake order in terms of quantity, flavor, and
- * pickup date. It also knows how to calculate the total price based on these order details.
- */
-class OrderViewModel : ViewModel() {
 
-    /**
-     * Cupcake state for this order
-     */
+//membuat fungsi OrderviewModel untuk menyimpan informasi tentang data pemesanan kue
+class OrderViewModel : ViewModel() {
+    //Menyimpan status terkini dari pesanan dalam variabel private _uiState
     private val _uiState = MutableStateFlow(OrderUiState(pickupOptions = pickupOptions()))
+    //Menyimpan ke uiState agar dapat diakses sebagai StateFlow
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
-    /**
-     * Set the quantity [numberCupcakes] of cupcakes for this order's state and update the price
-     */
+    //Fungsi setQuantity untuk menyimpan jumlah pesanan dan update harga
     fun setQuantity(numberCupcakes: Int) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -56,19 +34,14 @@ class OrderViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Set the [desiredFlavor] of cupcakes for this order's state.
-     * Only 1 flavor can be selected for the whole order.
-     */
+    //Fungsi setFlavour untuk menyimpan rasa yang dipilih
     fun setFlavor(desiredFlavor: String) {
         _uiState.update { currentState ->
             currentState.copy(flavor = desiredFlavor)
         }
     }
 
-    /**
-     * Set the [pickupDate] for this order's state and update the price
-     */
+    //fungsi setDate untuk menyimpan data tanggal
     fun setDate(pickupDate: String) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -78,16 +51,12 @@ class OrderViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Reset the order state
-     */
+    //fungsi resetOrder digunakan untuk mengembalikan status pesanan ke default
     fun resetOrder() {
         _uiState.value = OrderUiState(pickupOptions = pickupOptions())
     }
 
-    /**
-     * Returns the calculated price based on the order details.
-     */
+    //fungsi calculate digunakan untuk mengitung harga yang harus dibayarkan
     private fun calculatePrice(
         quantity: Int = _uiState.value.quantity,
         pickupDate: String = _uiState.value.date
@@ -101,9 +70,7 @@ class OrderViewModel : ViewModel() {
         return formattedPrice
     }
 
-    /**
-     * Returns a list of date options starting with the current date and the following 3 dates.
-     */
+    //fungsi pickupOptions digunakan untuk mendapatkan opsi pickup yang dipilih
     private fun pickupOptions(): List<String> {
         val dateOptions = mutableListOf<String>()
         val formatter = SimpleDateFormat("E MMM d", Locale.getDefault())
