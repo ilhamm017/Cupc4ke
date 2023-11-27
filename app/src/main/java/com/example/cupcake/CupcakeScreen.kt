@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.cupcake
 
 import android.content.Context
@@ -50,9 +35,7 @@ import com.example.cupcake.ui.OrderViewModel
 import com.example.cupcake.ui.SelectOptionScreen
 import com.example.cupcake.ui.StartOrderScreen
 
-/**
- * enum values that represent the screens in the app
- */
+//Membuat class enumeration yang digunakan untuk mendefinisikan nama untuk tampilan nantinya
 enum class CupcakeScreen(@StringRes val title: Int) {
     Start(title = R.string.app_name),
     Flavor(title = R.string.choose_flavor),
@@ -63,6 +46,7 @@ enum class CupcakeScreen(@StringRes val title: Int) {
 /**
  * Composable that displays the topBar and displays back button if back navigation is possible.
  */
+//fungsi composable yang digunakan untuk menampilkan bar aplikasi di setiap layar nantinya dan back button
 @Composable
 fun CupcakeAppBar(
     currentScreen: CupcakeScreen,
@@ -89,6 +73,7 @@ fun CupcakeAppBar(
     )
 }
 
+//fungsi composable yang digunakan untuk mangatur navigasi antar layar berdasarkan enumeration di atas
 @Composable
 fun CupcakeApp(
     viewModel: OrderViewModel = viewModel(),
@@ -171,9 +156,7 @@ fun CupcakeApp(
     }
 }
 
-/**
- * Resets the [OrderUiState] and pops up to [CupcakeScreen.Start]
- */
+//fungsi untuk mengatur ulang orderUiState dan mengarahkan navigasi kembali ke layar utama
 private fun cancelOrderAndNavigateToStart(
     viewModel: OrderViewModel,
     navController: NavHostController
@@ -182,9 +165,7 @@ private fun cancelOrderAndNavigateToStart(
     navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
 }
 
-/**
- * Creates an intent to share order details
- */
+//fungsi untuk membagikan detail pesanan
 private fun shareOrder(context: Context, subject: String, summary: String) {
     // Create an ACTION_SEND implicit intent with order details in the intent extras
     val intent = Intent(Intent.ACTION_SEND).apply {
